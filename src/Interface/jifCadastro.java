@@ -6,10 +6,6 @@ package Interface;
 
 import Model_pizzariaclaudiaerica.Cliente;
 import Model_pizzariaclaudiaerica.TabelaCliente;
-import Model_pizzariaclaudiaerica.Usability;
-import Relatorio.Relatorio;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -40,8 +36,6 @@ public class jifCadastro extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jTid = new javax.swing.JTextField();
-        jLcod = new javax.swing.JLabel();
         jLnome = new javax.swing.JLabel();
         jTnome = new javax.swing.JTextField();
         jTsobrenome = new javax.swing.JTextField();
@@ -50,13 +44,13 @@ public class jifCadastro extends javax.swing.JInternalFrame {
         jFTtelefone = new javax.swing.JFormattedTextField();
         jLemail = new javax.swing.JLabel();
         jTemail = new javax.swing.JTextField();
-        jRBnovocadastro = new javax.swing.JRadioButton();
-        jRBatualizarcadastro = new javax.swing.JRadioButton();
         bsalvar = new javax.swing.JButton();
-        blistar = new javax.swing.JButton();
+        blimpar = new javax.swing.JButton();
         bsair = new javax.swing.JButton();
-        jTable = new javax.swing.JScrollPane();
+        Scroll = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        bexcluir = new javax.swing.JButton();
+        jalterar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -80,10 +74,6 @@ public class jifCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jLcod.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLcod.setForeground(new java.awt.Color(51, 0, 255));
-        jLcod.setText("ID:");
-
         jLnome.setText("Nome:");
 
         jLsobrenome.setText("Sobrenome:");
@@ -98,14 +88,6 @@ public class jifCadastro extends javax.swing.JInternalFrame {
 
         jLemail.setText("E-mail:");
 
-        buttonGroup1.add(jRBnovocadastro);
-        jRBnovocadastro.setForeground(new java.awt.Color(0, 0, 255));
-        jRBnovocadastro.setText("Novo Cadastro");
-
-        buttonGroup1.add(jRBatualizarcadastro);
-        jRBatualizarcadastro.setForeground(new java.awt.Color(0, 0, 255));
-        jRBatualizarcadastro.setText("Atualizar Cadastro");
-
         bsalvar.setBackground(new java.awt.Color(153, 204, 255));
         bsalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         bsalvar.setText("Salvar");
@@ -115,12 +97,12 @@ public class jifCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        blistar.setBackground(new java.awt.Color(255, 204, 204));
-        blistar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        blistar.setText("Listar");
-        blistar.addMouseListener(new java.awt.event.MouseAdapter() {
+        blimpar.setBackground(new java.awt.Color(204, 255, 204));
+        blimpar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        blimpar.setText("Limpar Lista");
+        blimpar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                blistarMouseClicked(evt);
+                blimparMouseClicked(evt);
             }
         });
 
@@ -133,15 +115,29 @@ public class jifCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Nome", "Sobrenome", "Telefone", "Email"
+        jTable1.setModel(modelo);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
-        ));
-        jTable.setViewportView(jTable1);
+        });
+        Scroll.setViewportView(jTable1);
+
+        bexcluir.setBackground(new java.awt.Color(255, 204, 204));
+        bexcluir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        bexcluir.setText("Excluir");
+        bexcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bexcluirMouseClicked(evt);
+            }
+        });
+
+        jalterar.setText("Alterar");
+        jalterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jalterarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,55 +146,46 @@ public class jifCadastro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTable)
+                    .addComponent(Scroll)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLnome, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                                            .addComponent(jLcod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLnome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTnome, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                            .addComponent(jTid)))
+                                        .addComponent(jTnome, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLtelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFTtelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)))
+                                        .addComponent(jFTtelefone)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLsobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLemail, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(bsalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(blimpar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(blistar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jalterar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTemail)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRBnovocadastro)
-                                        .addGap(60, 60, 60)
-                                        .addComponent(jRBatualizarcadastro))
-                                    .addComponent(jTsobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTsobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 2, Short.MAX_VALUE))
-                            .addComponent(bsair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(bexcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bsair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLcod)
-                    .addComponent(jRBnovocadastro)
-                    .addComponent(jRBatualizarcadastro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLnome)
                     .addComponent(jTnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,10 +200,12 @@ public class jifCadastro extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bsalvar)
-                    .addComponent(blistar)
-                    .addComponent(bsair))
+                    .addComponent(blimpar)
+                    .addComponent(bsair)
+                    .addComponent(bexcluir)
+                    .addComponent(jalterar))
                 .addGap(18, 18, 18)
-                .addComponent(jTable, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addComponent(Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -239,87 +228,130 @@ public class jifCadastro extends javax.swing.JInternalFrame {
 
     private void bsalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bsalvarMouseClicked
 
-        String id = jTid.getText().trim();
-        String nome = jTnome.getText().trim();
-        String sobrenome = jTsobrenome.getText().trim();
-        String telefone = jFTtelefone.getText().trim();
-        String email = jTemail.getText().trim();
+                
+        String nome = jTnome.getText();
+        String sobrenome = jTsobrenome.getText();
+        String telefone = jFTtelefone.getText();
+        String email = jTemail.getText();
         //Cliente c = null;
         
-        DefaultTableModel val = (DefaultTableModel) jTable1.getModel();
-            val.addRow(new String[]{id, nome, sobrenome, telefone, email});
+        Cliente cliente = new Cliente(-1L,nome,sobrenome,telefone, email);
+        listaDeClientes.add(cliente);
+        modelo.adicionaCliente(cliente);
+        
+        
+        //DefaultTableModel val = (DefaultTableModel) jTable1.getModel();
+            //val.addRow(new String[]{-1L, nome, sobrenome, telefone, email});
         
             
-            jTid.setText("");
+            
             jTnome.setText("");
             jTsobrenome.setText("");
             jFTtelefone.setText("");
             jTemail.setText("");
             
             jTnome.requestFocus(); //limpa os campos e retorna na caixa de texto do nome
-        //c = new Cliente (id, nome, sobrenome, telefone, email);
-        
-        //Cliente cliente = new Cliente(id,nome,sobrenome,telefone, email);
-        //listaDeClientes.add(cliente);
-        //modelo.adicionaCliente(cliente);
-       // if (c != null)
-            
-        //Usability.list.add(c);
-        
-        //String relatorio = Relatorio.gerarRelatorio(Usability.list);
-        
-        
-        //jTcadastro.setText(relatorio);
         
         // TODO add your handling code here:
     }//GEN-LAST:event_bsalvarMouseClicked
 
-    private void blistarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blistarMouseClicked
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
-        modelo.atualizarTabela(listaDeClientes);
+        //Pega a linha clicada
+        linhaClicada = jTable1.rowAtPoint(evt.getPoint());
+        //Pega o contato da linha clidada
+        Cliente contato = modelo.getCliente(linhaClicada);
+        //Seta os dados nos componentes
+        
+        jTnome.setText(contato.getNome());
+        jTsobrenome.setText(contato.getSobrenome());
+        jFTtelefone.setText(contato.getTelefone());
+        jTemail.setText(contato.getEmail());
         
         // TODO add your handling code here:
-    }//GEN-LAST:event_blistarMouseClicked
+    }//GEN-LAST:event_jTable1MouseClicked
 
-    
-public static void main(String args[]) {
-        
-        /* Cliente */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(jifCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void bexcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bexcluirMouseClicked
+
+        int[] linhasSelecionadas = jTable1.getSelectedRows();
+        List<Cliente> listaExcluir = new ArrayList();
+        for (int i = 0; i < linhasSelecionadas.length; i++) {
+            Cliente cliente = modelo.getCliente(linhasSelecionadas[i]);
+            listaExcluir.add(cliente);
+
         }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new jifCadastro().setVisible(true);
+        for(Cliente cliente:listaExcluir){
+            listaDeClientes.remove(cliente);
+            modelo.removeCliente(cliente);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bexcluirMouseClicked
+
+    private void jalterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jalterarMouseClicked
+
+            if(linhaClicada!=-1){
+            Cliente cliente = modelo.getCliente(linhaClicada);
+
+            String nome = jTnome.getText();
+            String sobrenome = jTsobrenome.getText();
+            String telefone = jFTtelefone.getText();
+            cliente.setNome(jTnome.getText());
+            cliente.setSobrenome(jTsobrenome.getText());
+            cliente.setTelefone(jFTtelefone.getText());
+            cliente.setEmail(jTemail.getText());
+            //Atualiza tabela
+            modelo.fireTableRowsUpdated(linhaClicada, linhaClicada);
+            
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jalterarMouseClicked
+
+    private void blimparMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blimparMouseClicked
+
+        modelo.limpaTabela();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_blimparMouseClicked
+
+public static void main(String args[]) {
+
+        /* Cliente */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        });
+        }
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(jifCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    }
+
+        /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        @Override
+        public void run() {
+            new jifCadastro().setVisible(true);
+        }
+    });
 }
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton blistar;
+    private javax.swing.JScrollPane Scroll;
+    private javax.swing.JButton bexcluir;
+    private javax.swing.JButton blimpar;
     private javax.swing.JButton bsair;
     private javax.swing.JButton bsalvar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFormattedTextField jFTtelefone;
-    private javax.swing.JLabel jLcod;
     private javax.swing.JLabel jLemail;
     private javax.swing.JLabel jLnome;
     private javax.swing.JLabel jLsobrenome;
     private javax.swing.JLabel jLtelefone;
-    private javax.swing.JRadioButton jRBatualizarcadastro;
-    private javax.swing.JRadioButton jRBnovocadastro;
-    private javax.swing.JScrollPane jTable;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTemail;
-    private javax.swing.JTextField jTid;
     private javax.swing.JTextField jTnome;
     private javax.swing.JTextField jTsobrenome;
+    private javax.swing.JButton jalterar;
     // End of variables declaration//GEN-END:variables
 }

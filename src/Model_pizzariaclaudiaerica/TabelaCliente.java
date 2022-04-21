@@ -14,9 +14,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TabelaCliente extends AbstractTableModel {
     
-    private String[] colunas = new String[]{"ID","Nome", "Sobrenome", "Telefone", "Email"};
+    private String[] colunas = new String[]{"Nome", "Sobrenome", "Telefone", "Email"};
 
-    private List<Cliente> lista = new ArrayList();
+    private List<Cliente> lista = new ArrayList();    
 
 
     @Override
@@ -48,11 +48,11 @@ public class TabelaCliente extends AbstractTableModel {
         Cliente costumer = lista.get(rowIndex);
         
         switch (columnIndex) {
-            case 0: return costumer.getPes_id(); 
-            case 1: return costumer.getNome();
-            case 2: return costumer.getSobrenome();
-            case 3: return costumer.getTelefone();
-            case 4: return costumer.getEmail();
+            
+            case 0: return costumer.getNome();
+            case 1: return costumer.getSobrenome();
+            case 2: return costumer.getTelefone();
+            case 3: return costumer.getEmail();
             default : return null;
         }
     }

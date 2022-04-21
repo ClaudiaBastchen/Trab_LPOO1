@@ -13,16 +13,15 @@ import java.time.LocalDate;
 public class Cliente{
 
   
-    private String pes_id;
+    private long id;
     private String nome;
     private String sobrenome;
     private String telefone;
     private String email;
-    public String getPes_id;
     
 
-    public Cliente(String pes_id, String nome, String sobrenome, String telefone, String email) {
-        this.pes_id = pes_id;
+    public Cliente(long id, String nome, String sobrenome, String telefone, String email) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.telefone = telefone;
@@ -31,17 +30,17 @@ public class Cliente{
 
         
         /**
-     * @return the pes_id
+     * @return the id
      */
-    public String getPes_id() {
-        return pes_id;
+    public long getId() {
+        return id;
     }
 
     /**
-     * @param pes_id the pes_id to set
+     * @param id the id to set
      */
-    public void setPes_id(String pes_id) {
-        this.pes_id = pes_id;
+    public void setId(long id) {
+        this.id = id;
     }
     /**
      * @return the nome
